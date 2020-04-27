@@ -113,3 +113,5 @@ experiments/
 datasets/
 
 .idea/
+
+api_key.txt

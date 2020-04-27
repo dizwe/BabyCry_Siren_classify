@@ -12,6 +12,7 @@
     "validation_split":0.25,
     "verbose_training": true
   },
+  "comet_api_key" : "***",
   "callbacks":{
     "checkpoint_monitor": "val_loss",
     "checkpoint_mode": "min",

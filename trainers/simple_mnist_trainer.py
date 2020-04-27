@@ -2,7 +2,6 @@ from base.base_trainer import BaseTrain
 import os
 from keras.callbacks import ModelCheckpoint, TensorBoard
 
-
 class SimpleMnistModelTrainer(BaseTrain):
     def __init__(self, model, data, config):
         super(SimpleMnistModelTrainer, self).__init__(model, data, config)
@@ -36,7 +35,7 @@ class SimpleMnistModelTrainer(BaseTrain):
             from comet_ml import Experiment
             experiment = Experiment(api_key=self.config.comet_api_key, project_name=self.config.exp_name)
             experiment.disable_mp()
-            experiment.log_multiple_params(self.config)
+            experiment.log_parameters(self.config)
             self.callbacks.append(experiment.get_keras_callback())
 
     def train(self):

@@ -1,3 +1,4 @@
+from comet_ml import Experiment
 from data_loader.simple_mnist_data_loader import SimpleMnistDataLoader
 from models.simple_mnist_model import SimpleMnistModel
 from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
