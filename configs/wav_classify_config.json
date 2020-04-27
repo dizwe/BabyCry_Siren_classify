@@ -1,0 +1,29 @@
+{
+  "exp": {
+    "name": "wav_classify_config"
+  },
+  "data_loader": {
+    "name": "wav_classify_loader.WavClassifyDataLoader"
+  },
+  "model":{
+    "name": "simple_mnist_model.SimpleMnistModel",
+    "learning_rate": 0.001,
+    "optimizer": "adam"
+  },
+  "comet_api_key" : "***",
+  "trainer":{
+    "name": "simple_mnist_trainer.SimpleMnistModelTrainer",
+    "num_epochs": 20,
+    "batch_size": 64,
+    "validation_split":0.25,
+    "verbose_training": true
+  },
+  "callbacks":{
+    "checkpoint_monitor": "val_loss",
+    "checkpoint_mode": "min",
+    "checkpoint_save_best_only": true,
+   "checkpoint_save_weights_only": true,
+    "checkpoint_verbose": true,
+    "tensorboard_write_graph": true
+  }
+}

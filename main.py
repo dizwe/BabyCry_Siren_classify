@@ -1,5 +1,5 @@
 from comet_ml import Experiment
-from data_loader.simple_mnist_data_loader import SimpleMnistDataLoader
+from data_loader.wav_classify_loader import WavClassifyDataLoader
 from models.simple_mnist_model import SimpleMnistModel
 from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
 from utils.config import process_config
@@ -20,8 +20,7 @@ def main():
     create_dirs([config.callbacks.tensorboard_log_dir, config.callbacks.checkpoint_dir])
 
     print('Create the data generator.')
-    data_loader = SimpleMnistDataLoader(config)
-
+    data_loader = WavClassifyDataLoader(config)
     print('Create the model.')
     model = SimpleMnistModel(config)
 
