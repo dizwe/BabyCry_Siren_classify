@@ -1,7 +1,7 @@
 from comet_ml import Experiment
 from data_loader.wav_classify_loader import WavClassifyDataLoader
-from models.simple_mnist_model import SimpleMnistModel
-from trainers.simple_mnist_trainer import SimpleMnistModelTrainer
+from models.wav_classify_model import WavClassifyModel
+from trainers.wav_classify_trainer import WavClassifyTrainer
 from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.utils import get_args
@@ -22,10 +22,10 @@ def main():
     print('Create the data generator.')
     data_loader = WavClassifyDataLoader(config)
     print('Create the model.')
-    model = SimpleMnistModel(config)
+    model = WavClassifyModel(config)
 
     print('Create the trainer')
-    trainer = SimpleMnistModelTrainer(model.model, data_loader.get_train_data(), config)
+    trainer = WavClassifyTrainer(model.model, data_loader.get_train_data(), config)
 
     print('Start training the model.')
     trainer.train()

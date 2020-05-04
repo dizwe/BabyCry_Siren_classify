@@ -8,7 +8,10 @@
   "model":{
     "name": "simple_mnist_model.SimpleMnistModel",
     "learning_rate": 0.001,
-    "optimizer": "adam"
+    "optimizer": "adam",
+    "sampling_rate": 8000,
+    "duration": 10,
+    "num_class" :3
   },
   "comet_api_key" : "***",
   "trainer":{
@@ -22,7 +25,7 @@
     "checkpoint_monitor": "val_loss",
     "checkpoint_mode": "min",
     "checkpoint_save_best_only": true,
-   "checkpoint_save_weights_only": true,
+    "checkpoint_save_weights_only": true,
     "checkpoint_verbose": true,
     "tensorboard_write_graph": true
   }
