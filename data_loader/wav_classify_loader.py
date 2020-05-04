@@ -16,6 +16,7 @@ class WavClassifyDataLoader(BaseDataLoader):
         # 원래는numpy array로 return
         a_class = 'Baby cry, infant cry'
         b_class = 'Siren'
+        class_list = [a_class, b_class, 'home_cut','Male speech, man speaking','Outside, rural or natural','snoring','Traffic noise, roadway noise','Vehicle']
         
         data_sec_size = 10 # 10초
         # self.X = np.empty((data_sec_size*8000,), int)
@@ -25,8 +26,10 @@ class WavClassifyDataLoader(BaseDataLoader):
         cur_path = os.getcwd() 
         # parent_dir = os.path.abspath(os.path.join(cur_path, os.pardir))
         dataset_dir = os.path.join(cur_path, 'datasets')
-        for cl_idx,cl in enumerate([a_class, b_class]):
+        for cl_idx,cl in enumerate(os.listdir(dataset_dir)):
             class_dir = os.path.join(dataset_dir, cl)
+            if cl not in class_list:
+                continue
             for file_idx, a_file in enumerate(os.listdir(class_dir)):
                 if a_file.endswith('.mp3'):
                     try: 
@@ -40,12 +43,17 @@ class WavClassifyDataLoader(BaseDataLoader):
                         # amp = amp.reshape((data_sec_size, sr))
                         
                         X.append(amp)
-                        cl = [0,0,0]
-                        cl[cl_idx] = 1  # onehot encoding
-                        y.append(cl)
+                        cl_onehot = [0,0,0]
+                        if cl == a_class:
+                            cl_onehot[0] = 1  # onehot encoding
+                        elif cl == b_class:
+                            cl_onehot[1] = 1
+                        else:
+                            cl_onehot[2] = 1
+                        y.append(cl_onehot)
                     except Exception as e:
                         print(e)
-                        print(a_file)
+                        print(a_file)   
                         errors.append(a_file)
 
         # https://stackoverflow.com/questions/22392497/how-to-add-a-new-row-to-an-empty-numpy-array        
