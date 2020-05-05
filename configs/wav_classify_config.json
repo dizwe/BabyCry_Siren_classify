@@ -6,7 +6,7 @@
     "name": "wav_classify_loader.WavClassifyDataLoader"
   },
   "model":{
-    "name": "simple_mnist_model.SimpleMnistModel",
+    "name": "wav_classify_model.WavClassifyModel",
     "learning_rate": 0.001,
     "optimizer": "adam",
     "sampling_rate": 8000,
@@ -15,8 +15,8 @@
   },
   "comet_api_key" : "***",
   "trainer":{
-    "name": "simple_mnist_trainer.SimpleMnistModelTrainer",
-    "num_epochs": 20,
+    "name": "wav_classify_trainer.WavClassifyTrainer",
+    "num_epochs": 40,
     "batch_size": 64,
     "validation_split":0.25,
     "verbose_training": true

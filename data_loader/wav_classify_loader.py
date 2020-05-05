@@ -28,12 +28,14 @@ class WavClassifyDataLoader(BaseDataLoader):
         dataset_dir = os.path.join(cur_path, 'datasets')
         for cl_idx,cl in enumerate(os.listdir(dataset_dir)):
             class_dir = os.path.join(dataset_dir, cl)
-            if cl not in class_list:
+            if cl not in class_list: # 이상한파일 걸러내기
                 continue
+            number_of_files = len([item for item in os.listdir(class_dir) if os.path.isfile(os.path.join(class_dir, item))])
             for file_idx, a_file in enumerate(os.listdir(class_dir)):
                 if a_file.endswith('.mp3'):
-                    try: 
-                        print(a_file)
+                    if(file_idx%400==0):
+                        print(f'{cl} : {file_idx}/{number_of_files} ===============================')
+                    try:     
                         amp, sr = librosa.load(os.path.join(class_dir, a_file),sr=8000)
                         amp = audio_norm(amp) # normalize
                         if amp.shape[0]<data_sec_size*sr:
