@@ -21,12 +21,15 @@ def main():
         print('Create the model.')
         model = factory.create("models."+config.model.name)(config)
 
-        print('Create the trainer')
-        trainer = factory.create("trainers."+config.trainer.name)(model.model, data_loader.get_train_data(), config)
+        if config.skip_train!=True:
+            print('Create the trainer')
+            trainer = factory.create("trainers."+config.trainer.name)(model.model, data_loader.get_train_data(), config)
 
-        print('Start training the model.')
-        trainer.train()
-
+            print('Start training the model.')
+            trainer.train()
+        
+        evaluator = factory.create("evaluators."+config.evaluator.name)(model.model, data_loader.get_test_data(), config)
+        evaluator.evaluate()
     except Exception as e:
         print(e)
         sys.exit(1)

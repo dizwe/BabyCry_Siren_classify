@@ -66,7 +66,7 @@ class WavClassifyDataLoader(BaseDataLoader):
             y = np.stack(y, axis=0)
             np.save('X_data', X)
             np.save('y_data', y)
-            print(errors)
+            print(f'errors : {errors}')
         else: # 데이터가 너무 커서 그냥 따로 저장하게 해둠
             X = np.load('X_data.npy')
             y = np.load('y_data.npy')

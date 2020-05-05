@@ -117,3 +117,6 @@ datasets/
 api_key.txt
 .DS_Store
 temp/
+*.npy
+datasets_real/
+errors.json
