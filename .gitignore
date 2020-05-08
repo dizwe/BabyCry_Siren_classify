@@ -120,3 +120,4 @@ temp/
 *.npy
 datasets_real/
 errors.json
+*.mp3

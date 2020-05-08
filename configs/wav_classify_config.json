@@ -33,5 +33,10 @@
     "name":"wav_classify_evaluator.WavClassifyEvaluator",
     "evaluate_model":""
   },
+  "predictor":{
+    "name":"wav_classify_predictor.WavClassifyPredictor",
+    "predict_file_path":"predictors/home.mp3",
+    "predict_model":"predictors/wav_classify_weight.hdf5"
+  },
   "skip_train":true
 }

@@ -43,7 +43,6 @@ class WavClassifyDataLoader(BaseDataLoader):
                                 # 왼쪽 오른쪽 똑같은 크기로 reflect
                                 amp=np.pad(amp,int(np.ceil((10*sr-amp.shape[0])/2)),mode='reflect')
                             amp=amp[:data_sec_size*sr]  
-                            # amp = amp.reshape((data_sec_size, sr))
                             
                             X.append(amp)
                             cl_onehot = [0,0,0]
@@ -70,6 +69,13 @@ class WavClassifyDataLoader(BaseDataLoader):
         else: # 데이터가 너무 커서 그냥 따로 저장하게 해둠
             X = np.load('X_data.npy')
             y = np.load('y_data.npy')
+        
+        # ## 필요하면 melspectrogram?
+        # mels = []
+        # for x in X:
+        #     mels.append(librosa.feature.melspectrogram(y=np.squeeze(x), sr=8000))
+
+        # print(mels[0].shape)
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33, random_state=42)
         
     def get_train_data(self):
