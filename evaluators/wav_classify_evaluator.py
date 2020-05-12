@@ -11,6 +11,8 @@ class WavClassifyEvaluator(BaseEvaluator):
             self.model.compile(optimizer=self.config.model.optimizer,
                             loss='categorical_crossentropy',
                             metrics=['acc'])
-        print("-----------Evaluate Result-------------------")
-        print(self.model.evaluate(x= self.data[0], y=self.data[1]))
+        # print("-----------Evaluate Result-------------------")
+        # print(self.model.evaluate(x= self.data[0], y=self.data[1]))
+        result = self.model.predict(self.data[0])
+        return result, self.data[1]
         

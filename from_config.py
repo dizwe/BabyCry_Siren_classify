@@ -4,6 +4,8 @@ from utils.dirs import create_dirs
 from utils.args import get_args
 from utils import factory
 import sys
+from sklearn.metrics import classification_report
+import numpy as np
 
 def main():
     # capture the config path from the run arguments
@@ -28,8 +30,14 @@ def main():
             print('Start training the model.')
             trainer.train()
         
+        # evaluator = factory.create("evaluators."+config.evaluator.name)(model.model, data_loader.get_test_data(), config)
+        # evaluator.evaluate()
         evaluator = factory.create("evaluators."+config.evaluator.name)(model.model, data_loader.get_test_data(), config)
-        evaluator.evaluate()
+        
+        result, y = evaluator.evaluate()
+        result_idx = np.argmax(result,axis=1)
+        y_idx = np.max(y,axis=1)
+        print(classification_report(result_idx, y_idx))
     except Exception as e:
         print(e)
         sys.exit(1)
