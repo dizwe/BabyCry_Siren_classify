@@ -36,7 +36,7 @@ def main():
         
         result, y = evaluator.evaluate()
         result_idx = np.argmax(result,axis=1)
-        y_idx = np.max(y,axis=1)
+        y_idx = np.argmax(y,axis=1)
         print(classification_report(result_idx, y_idx))
     except Exception as e:
         print(e)

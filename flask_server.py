@@ -69,7 +69,6 @@ def hello_world():
     
     #https://github.com/keras-team/keras/issues/6462
     #https://github.com/keras-team/keras/issues/6124
-    # predict_result = temp_predict(data)
     predict_result =  model.predict(data)
     print(predict_result)
     print(class_list[np.argmax(predict_result)])
@@ -78,7 +77,7 @@ def hello_world():
     # except Exception as e:
     #      print(e)
 
-# python -m flask run 하면 이게 실행이 안될수도 있다!
+# python -m flask run 하면 이게 실행이 안될수도 있다.!
 # python hello.py 하고 이걸 하면 된다!
 if __name__ == "__main__":
     print(("* Loading Keras model and Flask starting server..."
