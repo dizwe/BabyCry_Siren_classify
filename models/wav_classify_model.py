@@ -28,6 +28,8 @@ class WavClassifyModel(BaseModel):
     
         self.model.add(Convolution1D(256, 3, activation='relu', padding="valid"))
         self.model.add(Convolution1D(256, 3, activation='relu', padding="valid"))
+        # https://stats.stackexchange.com/questions/257321/what-is-global-max-pooling-layer-and-what-is-its-advantage-over-maxpooling-layer
+        # Why use it? -> 1. category랑 conv랑 거의 바로 연결이 되는 효과가 있음. 2. parameter를 이쪽에서 줄임으로써 overfitting 줄임
         self.model.add(GlobalMaxPool1D())
         self.model.add(Dropout(rate=0.2))
 

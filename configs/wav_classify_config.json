@@ -16,7 +16,7 @@
   "comet_api_key" : "***",
   "trainer":{
     "name": "wav_classify_trainer.WavClassifyTrainer",
-    "num_epochs": 40,
+    "num_epochs": 10,
     "batch_size": 64,
     "validation_split":0.25,
     "verbose_training": true
@@ -35,8 +35,8 @@
   },
   "predictor":{
     "name":"wav_classify_predictor.WavClassifyPredictor",
-    "predict_file_path":"/home/dizwe/VibrationFromWarningForHearingImpaired/ML/Keras-Project-Template/predictors/home.wav",
-    "predict_model":"/home/dizwe/VibrationFromWarningForHearingImpaired/ML/Keras-Project-Template/predictors/wav_classify_weight.hdf5"
+    "predict_file_path":"./predictors/home.mp3",
+    "predict_model":"./predictors/wav_classify_config-01-1.10.hdf5"
   },
-  "skip_train":true
+  "skip_train":false
 }
