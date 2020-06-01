@@ -71,8 +71,11 @@ def hello_world():
     #https://github.com/keras-team/keras/issues/6124
     predict_result =  model.predict(data)
     print(predict_result)
-    print(class_list[np.argmax(predict_result)])
-    return "111"
+    predict_label=class_list[np.argmax(predict_result)]
+    return {
+            "predict":predict_label,
+            "prob":predict_result[0].tolist()
+            }
 
     # except Exception as e:
     #      print(e)
@@ -83,4 +86,4 @@ if __name__ == "__main__":
     print(("* Loading Keras model and Flask starting server..."
         "please wait until server has fully started"))
     load_model()
-    app.run()
+    app.run(host='0.0.0.0')
