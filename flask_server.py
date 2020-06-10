@@ -3,12 +3,18 @@ from utils.config import process_config
 from utils.dirs import create_dirs
 from utils.args import get_args
 from utils import factory
+import tensorflow as tf
+from tensorflow.python.keras.backend import set_session
 import sys
 import librosa
 import numpy as np
 
+global sess
+global graph
 app = Flask(__name__)
 
+sess = tf.Session()
+graph = tf.get_default_graph()
 def audio_norm(data):
     max_data = np.max(data)
     min_data = np.min(data)
@@ -20,6 +26,7 @@ config = process_config('configs/wav_classify_config.json')
 
 def load_model():
     global model
+    set_session(sess)
     model = factory.create("models."+config.model.name)(config)
     model = model.model
     model.load_weights(config.predictor.predict_model)
@@ -69,9 +76,11 @@ def hello_world():
     
     #https://github.com/keras-team/keras/issues/6462
     #https://github.com/keras-team/keras/issues/6124
-    predict_result =  model.predict(data)
-    print(predict_result)
-    predict_label=class_list[np.argmax(predict_result)]
+    with sess.as_default():
+        with sess.graph.as_default():
+            predict_result =  model.predict(data)
+            print(predict_result)
+            predict_label=class_list[np.argmax(predict_result)]
     return {
             "predict":predict_label,
             "prob":predict_result[0].tolist()
@@ -86,4 +95,4 @@ if __name__ == "__main__":
     print(("* Loading Keras model and Flask starting server..."
         "please wait until server has fully started"))
     load_model()
-    app.run(host='0.0.0.0')
+    app.run()
