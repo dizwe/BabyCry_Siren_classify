@@ -39,7 +39,7 @@ class WavClassifyTrainer(BaseTrain):
             self.callbacks.append(experiment.get_keras_callback())
 
     def train(self):
-        history = self.model.fit(
+        hist = self.model.fit(
             self.data[0], self.data[1],
             epochs=self.config.trainer.num_epochs,
             verbose=self.config.trainer.verbose_training,
@@ -47,7 +47,28 @@ class WavClassifyTrainer(BaseTrain):
             validation_split=self.config.trainer.validation_split,
             callbacks=self.callbacks,
         )
-        self.loss.extend(history.history['loss'])
-        self.acc.extend(history.history['acc'])
-        self.val_loss.extend(history.history['val_loss'])
-        self.val_acc.extend(history.history['val_acc'])
+        import matplotlib.pyplot as plt
+
+        fig, loss_ax = plt.subplots()
+
+        # acc_ax = loss_ax.twinx()
+
+        loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+        loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
+
+        # acc_ax.plot(hist.history['acc'], 'b', label='train acc')
+        # acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
+
+        loss_ax.set_xlabel('epoch')
+        loss_ax.set_ylabel('loss')
+        # acc_ax.set_ylabel('accuray')
+
+        loss_ax.legend(loc='upper left')
+        # acc_ax.legend(loc='lower left')
+
+        plt.savefig('fig1.png', dpi=300)
+        
+        self.loss.extend(hist.history['loss'])
+        self.acc.extend(hist.history['acc'])
+        self.val_loss.extend(hist.history['val_loss'])
+        self.val_acc.extend(hist.history['val_acc'])
