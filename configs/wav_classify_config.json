@@ -3,7 +3,8 @@
     "name": "wav_classify_config"
   },
   "data_loader": {
-    "name": "wav_classify_loader.WavClassifyDataLoader"
+    "name": "wav_classify_loader.WavClassifyDataLoader",
+    "kfold": 5
   },
   "model":{
     "name": "wav_classify_model.WavClassifyModel",
@@ -35,8 +36,8 @@
   },
   "predictor":{
     "name":"wav_classify_predictor.WavClassifyPredictor",
-    "predict_file_path":"/home/dizwe/VibrationFromWarningForHearingImpaired/ML/Keras-Project-Template/predictors/home.wav",
-    "predict_model":"/home/dizwe/VibrationFromWarningForHearingImpaired/ML/Keras-Project-Template/predictors/wav_classify_weight.hdf5"
+    "predict_file_path":"~/predictors/home.wav",
+    "predict_model":"~/predictors/wav_classify_weight.hdf5"
   },
   "skip_train":false
 }

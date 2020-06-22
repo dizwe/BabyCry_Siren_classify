@@ -1,5 +1,5 @@
 from base.base_data_loader import BaseDataLoader
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, KFold
 import os
 import librosa
 import numpy as np
@@ -37,7 +37,7 @@ class WavClassifyDataLoader(BaseDataLoader):
                         if(file_idx%400==0):
                             print(f'{cl} : {file_idx}/{number_of_files} ===============================')
                         try:     
-                            amp, sr = librosa.load(os.path.join(class_dir, a_file),sr=8000)
+                            amp, sr = librosa.load(os.path.join(class_dir, a_file),sr=config.model.sampling_rate)
                             amp = audio_norm(amp) # normalize
                             if amp.shape[0]<data_sec_size*sr:
                                 # 왼쪽 오른쪽 똑같은 크기로 reflect
@@ -76,10 +76,28 @@ class WavClassifyDataLoader(BaseDataLoader):
         #     mels.append(librosa.feature.melspectrogram(y=np.squeeze(x), sr=8000))
 
         # print(mels[0].shape)
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+        self.kfold = config.data_loader.kfold
+        if config.data_loader.kfold >1:
+            kf = KFold(n_splits=5,shuffle=True,random_state=42)
+            kf.get_n_splits(X)
+            self.fold_list = []
+            for i, (train_index, test_index) in enumerate(kf.split(X)):
+                X_train, X_test = X[train_index], X[test_index]
+                y_train, y_test = y[train_index], y[test_index]
+                self.fold_list.append((X_train, X_test, y_train, y_test))
+        else:
+            self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33, random_state=42)
         
-    def get_train_data(self):
-        return self.X_train, self.y_train
-
-    def get_test_data(self):
-        return self.X_test, self.y_test
+    def get_train_data(self, idx=0):
+        if self.kfold >1:
+            X_train, _, y_train, _ = self.fold_list[idx]
+            return X_train, y_train
+        else:
+            return self.X_train, self.y_train
+    def get_test_data(self,idx=0):
+        if self.kfold >1:
+            _, X_test, _, y_test = self.fold_list[idx]
+            return X_test, y_test
+        else:
+            return self.X_test, self.y_test
+        
