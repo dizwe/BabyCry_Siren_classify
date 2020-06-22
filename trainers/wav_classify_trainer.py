@@ -1,6 +1,7 @@
 from base.base_trainer import BaseTrain
 import os
 from keras.callbacks import ModelCheckpoint, TensorBoard
+import matplotlib.pyplot as plt
 
 class WavClassifyTrainer(BaseTrain):
     def __init__(self, model, data, config):
@@ -47,27 +48,44 @@ class WavClassifyTrainer(BaseTrain):
             validation_split=self.config.trainer.validation_split,
             callbacks=self.callbacks,
         )
-        import matplotlib.pyplot as plt
+        
+        fig, acc_ax = plt.subplots() # fig, loss_ax = plt.subplots()
+        # acc_ax = loss_ax.twinx() # X 
+        # axis는 공유하지만, y axis는 공유하지 않는 metric
 
-        fig, loss_ax = plt.subplots()
+        # loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+        # loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
 
-        # acc_ax = loss_ax.twinx()
+        acc_ax.plot(hist.history['acc'], 'b', label='train acc')
+        acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
 
-        loss_ax.plot(hist.history['loss'], 'y', label='train loss')
-        loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
+        acc_ax.set_xlabel('epoch')# loss_ax.set_xlabel('epoch')
+        # loss_ax.set_ylabel('loss')
+        acc_ax.set_ylabel('accuray')
 
-        # acc_ax.plot(hist.history['acc'], 'b', label='train acc')
-        # acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
-
-        loss_ax.set_xlabel('epoch')
-        loss_ax.set_ylabel('loss')
-        # acc_ax.set_ylabel('accuray')
-
-        loss_ax.legend(loc='upper left')
-        # acc_ax.legend(loc='lower left')
+        # loss_ax.legend(loc='upper left')
+        acc_ax.legend(loc='upper left')# acc_ax.legend(loc='lower left')
 
         plt.savefig('fig1.png', dpi=300)
-        
+
+        ########### draw loss_ax
+        fig, acc_ax = plt.subplots() # fig, loss_ax = plt.subplots()
+        # acc_ax = loss_ax.twinx() # X 
+        # axis는 공유하지만, y axis는 공유하지 않는 metric
+
+        # loss_ax.plot(hist.history['loss'], 'y', label='train loss')
+        # loss_ax.plot(hist.history['val_loss'], 'r', label='val loss')
+
+        acc_ax.plot(hist.history['acc'], 'b', label='train acc')
+        acc_ax.plot(hist.history['val_acc'], 'g', label='val acc')
+
+        acc_ax.set_xlabel('epoch')# loss_ax.set_xlabel('epoch')
+        # loss_ax.set_ylabel('loss')
+        acc_ax.set_ylabel('accuray')
+
+        # loss_ax.legend(loc='upper left')
+        acc_ax.legend(loc='upper left')# acc_ax.legend(loc='lower left')
+
         self.loss.extend(hist.history['loss'])
         self.acc.extend(hist.history['acc'])
         self.val_loss.extend(hist.history['val_loss'])
