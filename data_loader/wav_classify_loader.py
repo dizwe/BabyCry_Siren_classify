@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split, KFold
 import os
 import librosa
 import numpy as np
+from sklearn.utils import shuffle 
 
 def audio_norm(data):
     max_data = np.max(data)
@@ -78,6 +79,7 @@ class WavClassifyDataLoader(BaseDataLoader):
         # print(mels[0].shape)
         self.kfold = config.data_loader.kfold
         if config.data_loader.kfold >1:
+            X, y = shuffle(X,y)
             kf = KFold(n_splits=5,shuffle=True,random_state=42)
             kf.get_n_splits(X)
             self.fold_list = []
