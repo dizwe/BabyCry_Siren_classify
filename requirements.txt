@@ -37,7 +37,7 @@ opt-einsum==3.1.0
 protobuf==3.11.4
 pycparser==2.20
 pyrsistent==0.16.0
-PyYAML==5.3.1
+PyYAML==5.4
 requests==2.23.0
 resampy==0.2.2
 rsa==3.4.2
